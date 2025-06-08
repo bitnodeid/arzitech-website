@@ -138,6 +138,27 @@
         .logo img:hover {
             transform: scale(1.1); /* Sedikit membesar saat di-hover */
         }
+.logo 
+{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Pastikan ini ada dan tambahkan font-weight */
+.logo span {
+    font-size: 1.2rem; /* Ukuran font yang sebelumnya atau sesuaikan */
+    font-weight: bold; /* ATAU font-weight: 700; */
+    color: #000000; /* Warna teks, bisa disesuaikan */
+    transition: color 0.3s ease; /* Tambahkan transisi jika Anda ingin efek hover */
+}
+
+/* Opsional: Efek hover jika Anda ingin teks berubah saat di-hover */
+.logo span:hover {
+    color: var(--color-gradient-start); /* Menggunakan warna dari variabel Anda */
+}
 
         /* Navigation menu */
         .nav-links {
@@ -319,7 +340,7 @@
         /* Animasi Keren Badai untuk Logo Hero saat di-hover */
         .hero img:hover {
             animation: spinAndGlow 1.5s ease-in-out forwards; /* Panggil animasi saat di-hover */
-            filter: drop-shadow(0 0 20px rgba(21, 6, 231, 0)); /* Efek glow yang lebih kuat saat di-hover */
+            filter: drop-shadow(0 0 20px rgba(7, 6, 8, 0)); /* Efek glow yang lebih kuat saat di-hover */
         }
 
         /* Keyframes untuk Animasi Spin & Glow (Logo Hero) */
