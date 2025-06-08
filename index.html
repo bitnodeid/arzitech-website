@@ -1,65 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arzitech.xyz - Gadget & Node Service</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>arzitech.xyz - Gadget & Node Service Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --color-gradient-start: #3a82f7;
+      --color-gradient-end: #1d4ed8;
+      --color-gray-text: #6b7280;
+      --color-bg-light: #ffffff;
+      --border-radius: 0.75rem;
+      --transition-speed: 0.3s;
+      --shadow-soft: rgba(0, 0, 0, 0.05);
+      --max-width: 1200px;
+    }
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--color-bg-light);
+      color: var(--color-gray-text);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-gradient-start);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    a:hover,
+    a:focus {
+      color: var(--color-gradient-end);
+      outline: none;
+    }
+    h1, h2, h3, h4 {
+      margin-top: 0;
+      color: #111827;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    h1 {
+      font-size: 3rem;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #374151;
+    }
+    /* Utility */
+    .container {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .flex {
+      display: flex;
+    }
+    .items-center {
+      align-items: center;
+    }
+    .justify-between {
+      justify-content: space-between;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .ml-auto {
+      margin-left: auto;
+    }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Header / Nav */
+    header {
+      background: var(--color-bg-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px var(--shadow-soft);
+      transition: background-color 0.3s ease;
+    }
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      background: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+    }
+    /* Navigation menu */
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      position: relative;
+    }
+    .nav-item {
+      position: relative;
+      font-weight: 600;
+      color: #374151;
+    }
+    .nav-item > a {
+      padding: 0.5rem 0;
+      display: inline-block;
+      user-select: none;
+    }
+    .nav-item > a:focus,
+    .nav-item:hover > a {
+      color: var(--color-gradient-start);
+    }
+    /* Dropdown */
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background: rgb(106, 95, 155);
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+    }
+    /* Show dropdown on hover */
+    .nav-item:hover > .dropdown,
+    .nav-item:focus-within > .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .dropdown a {
+      display: block;
+      padding: 0.6rem 1rem;
+      color: #4b5563;
+      font-weight: 500;
+      border-radius: var(--border-radius);
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    .dropdown a:hover,
+    .dropdown a:focus {
+      background: var(--color-gradient-start);
+      color: white;
+      outline: none;
+    }
+    /* Sub-dropdown */
+    .dropdown .nav-item {
+      position: relative;
+    }
+    .dropdown .dropdown {
+      top: 0;
+      left: 100%;
+      margin-left: 0.25rem;
+      transform-origin: top left;
+    }
+    /* Hamburger for mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: var(--color-gradient-start);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    /* Mobile menu */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--color-bg-light);
+        flex-direction: column;
+        padding: 1rem 2rem;
+        overflow-y: auto;
+        box-shadow: inset 0 0 10px var(--shadow-soft);
+        z-index: 999;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-item:hover > .dropdown,
+      .nav-item:focus-within > .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        position: relative;
+        box-shadow: none;
+        background: transparent;
+        min-width: auto;
+      }
+      .dropdown {
+        position: relative;
+        box-shadow: none;
+        background: transparent;
+        transform: none;
+        opacity: 1 !important;
+        visibility: visible !important;
+        padding-left: 1rem;
+      }
+      .dropdown a {
+        padding: 0.5rem 0;
+        color: var(--color-gray-text);
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    /* Hamburger animation */
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 6rem 1rem 4rem;
+      text-align: center;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--color-gray-text);
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end));
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      box-shadow: 0 8px 16px rgba(58,130,247,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      font-size: 1.125rem;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      box-shadow: 0 12px 24px rgba(29,78,216,0.6);
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    /* Sections */
+    section {
+      max-width: var(--max-width);
+      margin: 0 auto 4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .flex-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 12px var(--shadow-soft);
+      padding: 2rem;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+    .card:hover,
+    .card:focus-within {
+      box-shadow: 0 8px 24px rgba(58,130,247,0.3);
+      transform: translateY(-5px);
+      outline: none;
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      color: var(--color-gradient-end);
+    }
+    .card p {
+      color: var(--color-gray-text);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.875rem;
+      color: #9ca3af;
+      border-top: 1px solid #e5e7eb;
+      user-select: none;
+    }
+
+  </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <a href="index.html" class="logo">Arzitech.xyz</a>
-            <button class="hamburger-menu" id="hamburger-menu">
-                <i class="fas fa-bars"></i> </button>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="gadget-service.html">Gadget Service</a></li>
-                <li><a href="node-service.html">Node Service</a></li>
-                <li><a href="mailto:hello@arzitech.xyz">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav class="container" aria-label="Primary navigation">
+      <a href="#" class="logo" aria-label="Arzitech.xyz logo">Arzitech.xyz</a>
 
-    <main>
-        <section class="hero-section">
-            <h1>arzitech.xyz</h1>
-            <p>Your Professional Partner for Gadget Repair & Node Operator</p>
-            <div class="cta-buttons">
-                <a href="gadget-service.html" class="button primary">Gadget Service</a>
-                <a href="node-service.html" class="button secondary">Node Service</a>
-            </div>
-        </section>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation" id="hamburgerBtn">
+        <span></span><span></span><span></span>
+      </button>
 
-        <section class="about-us">
-            <h2>About Arzitech</h2>
-            <p>
-                arzitech.xyz is dedicated to providing top-tier technical support.
-                From fixing your everyday devices to empowering your presence in the decentralized web,
-                we're here to ensure your technology works seamlessly.
-            </p>
-        </section>
-    </main>
+      <ul class="nav-links" id="primary-navigation" role="menubar">
+        <li class="nav-item" role="none">
+          <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">Home</a>
+        </li>
+        <li class="nav-item" role="none" tabindex="0">
+          <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">Gadget Service ▾</a>
+          <ul class="dropdown" role="menu" aria-label="Gadget Service submenu">
+            <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Smartphone Repair</a></li>
+            <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Tablet Repair</a></li>
+            <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Laptop Repair</a></li>
+            <li class="nav-item" role="none" tabindex="0">
+              <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">Accessories ▸</a>
+              <ul class="dropdown" role="menu" aria-label="Accessories submenu">
+                <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Chargers</a></li>
+                <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Cables</a></li>
+                <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Cases & Covers</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item" role="none" tabindex="0">
+          <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">Node Service ▾</a>
+          <ul class="dropdown" role="menu" aria-label="Node Service submenu">
+            <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Node Installation</a></li>
+            <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Node Maintenance</a></li>
+            <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Network Optimization</a></li>
+            <li class="nav-item" role="none" tabindex="0">
+              <a href="#" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="-1">Support ▸</a>
+              <ul class="dropdown" role="menu" aria-label="Support submenu">
+                <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">24/7 Help Desk</a></li>
+                <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">Remote Assistance</a></li>
+                <li class="nav-item" role="none"><a href="#" role="menuitem" tabindex="-1">On-site Support</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item" role="none">
+          <a href="#about" role="menuitem" tabindex="0">About Us</a>
+        </li>
+        <li class="nav-item" role="none">
+          <a href="#contact" role="menuitem" tabindex="0">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 arzitech.xyz. All rights reserved.</p>
-            <p>Email: <a href="mailto:hello@arzitech.xyz">hello@arzitech.xyz</a></p>
-            <p>Location: Jakarta, Indonesia</p>
-        </div>
-        <div class="footer-nav">
-            <a href="index.html">Home</a>
-            <a href="gadget-service.html">Gadget Service</a>
-            <a href="node-service.html">Node Service</a>
-            <a href="explorer.html">Explorer</a>
-        </div>
-    </footer>
+  <main>
+    <section class="hero" role="region" aria-label="Introduction">
+      <h1>Arzitech.xyz</h1>
+      <p>Your trusted platform for expert Gadget Service and reliable Node Service. We make technology work seamlessly for you.</p>
+      <button class="btn-primary" onclick="alert('Thank you for your interest! Contact us anytime.')">Get Started</button>
+    </section>
 
-    <script src="script.js"></script>
+    <section class="container" id="services" aria-label="Our Services">
+      <h2>Our Services</h2>
+      <div class="flex-cards">
+        <article class="card" tabindex="0" aria-labelledby="gadget-title">
+          <h3 id="gadget-title">Gadget Service</h3>
+          <p>Fast and dependable repairs for smartphones, tablets, and laptops. Quality parts, expert technicians, and quick turnaround times.</p>
+        </article>
+        <article class="card" tabindex="0" aria-labelledby="node-title">
+          <h3 id="node-title">Node Service</h3>
+          <p>Professional node installation, maintenance, and network optimization. Ensuring that your infrastructure runs smoothly and efficiently.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="technology" aria-label="Renewable Technology & the Importance of Real-time Services">
+      <h2>Renewable Technology &amp; the Importance of Real-time Services</h2>
+      <p>At arzitech.xyz, we adopt the latest renewable technologies to ensure that our services are always efficient, safe and relevant to modern-day needs. With a blend of innovation and expertise, we deliver solutions that drive progress and make your life easier.</p>
+      <p>Real-time service is vital in today's digital age. We provide immediate and responsive support and service providers, enabling quick repairs and maintenance so that your devices and network continue to operate without a hitch. Speed and reliability are our priorities to provide the best experience for you.</p>
+    </section>
+
+    <section class="container" id="about" aria-label="About arzitech.xyz">
+      <h2>About Arzitech.xyz</h2>
+      <p>arzitech.xyz is dedicated to providing top-notch technology services to keep your gadgets and network nodes running in perfect condition. With years of experience, our platform connects you to trusted experts ready to assist you anytime.</p>
+    </section>
+
+    <section class="container" id="contact" aria-label="Contact arzitech.xyz">
+      <h2>Contact Us</h2>
+      <p>Have questions or need service? Reach out to our friendly support team.</p>
+      <address>
+        <strong>Email:</strong> <a href="mailto:hello@arzitech.xyz">hello@arzitech.xyz</a><br />
+        <strong>Address:</strong> Karawang, Indonesia
+      </address>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Arzitech.xyz — All rights reserved.
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navLinks = document.getElementById('primary-navigation');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true' || false;
+      hamburgerBtn.setAttribute('aria-expanded', !expanded);
+      hamburgerBtn.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    // Keyboard accessibility for nested menus
+    const navItems = document.querySelectorAll('.nav-item[tabindex="0"] > a');
+
+    navItems.forEach(item => {
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const expanded = item.getAttribute('aria-expanded') === 'true';
+          item.setAttribute('aria-expanded', !expanded);
+          const dropdown = item.nextElementSibling;
+          if (dropdown) {
+            if (!expanded) {
+              dropdown.style.visibility = 'visible';
+              dropdown.style.opacity = '1';
+              dropdown.style.transform = 'translateY(0)';
+            } else {
+              dropdown.style.visibility = 'hidden';
+              dropdown.style.opacity = '0';
+              dropdown.style.transform = 'translateY(10px)';
+            }
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
+
