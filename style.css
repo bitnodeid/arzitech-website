@@ -1,3 +1,22 @@
+.hero img {
+    transition: none; /* Hapus transisi default jika menggunakan keyframes */
+}
+
+.hero img:hover {
+    animation: logoBounce 1s infinite alternate; /* Panggil animasi */
+}
+
+@keyframes logoBounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Sedikit naik */
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
 .logo {
     display: flex; /* Untuk mengontrol posisi gambar */
     align-items: center; /* Vertically center the image */
