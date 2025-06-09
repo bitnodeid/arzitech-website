@@ -93,9 +93,23 @@ nav.container {
     color: var(--color-primary);
     letter-spacing: -0.02em;
 }
-
+.github img {
+    height: 60px;
+    width: auto;
+    display: block;
+    transition: transform 0,3s case-in-out, filter 0.3s ease-in-out;
+    cursor: pointer;
+}
+.dropdown li a img { 
+    height: 1.2em;
+    width: auto;   
+    vertical-align: middle; 
+    margin-right: 5px; 
+}
 .logo span {
     color: var(--color-accent);
+    size: 200px;
+    
 }
 
 /* Navigation links */
@@ -130,7 +144,7 @@ nav.container {
     position: absolute;
     background: var(--color-bg);
     border-radius: var(--border-radius);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.863);
     margin-top: 0.5rem;
     min-width: 12rem;
     opacity: 0;
