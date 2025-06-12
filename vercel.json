@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "index.html",
+      "src": "node_service/Ping.Pub-explorer/package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "dist" }
     }
